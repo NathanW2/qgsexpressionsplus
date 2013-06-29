@@ -9,8 +9,9 @@ Current functions so far:
 
 ramp_color_rgb -> Return just rgb from the given color ramp
 
-.. note:: 
+Just a quick note
++++++++++++++++++
 
-	Functions used from this project will not be available in other QGIS installs without
-	first installing and enabling this plugin.
+Functions used from this project will not be available in other QGIS installs without
+first installing and enabling this plugin.
 	
