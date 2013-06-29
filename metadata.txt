@@ -11,7 +11,7 @@
 [general]
 name=Expressions Plus
 qgisMinimumVersion=2.0
-description=Extra functions for the expression engine which didn't make it into 2.0
+description=Extra functions for the expression engine which didn't make it into 2.0. Contributors welcome :)
 version=0.1
 author=Nathan Woodrow
 email=woodrow.nathan@gmail.com
@@ -26,9 +26,9 @@ email=woodrow.nathan@gmail.com
 # tags are comma separated with spaces allowed
 tags=expression
 
-homepage=
-tracker=
-repository=
+homepage= https://github.com/NathanW2/qgsexpressionsplus
+tracker= https://github.com/NathanW2/qgsexpressionsplus/issues
+repository= https://github.com/NathanW2/qgsexpressionsplus.git
 icon=icon.png
 # experimental flag
 experimental=False

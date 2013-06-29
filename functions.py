@@ -19,6 +19,23 @@ def getFloat(value):
 def ramp_color_rgb(values, feature, parent):
     """
         Return only the rgb part of a defined color ramp
+        
+        <p><h4>Syntax</h4>
+        ramp_color_rgb(<i>ramp_name,value</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <!-- List args for functions here-->
+        <i>  ramp_name</i> &rarr; the name of the color ramp as a string, for example 'Spectral'.<br>
+        <i>  value</i> &rarr; the position on the ramp to select the color from as a real number between 0 and 1.<br>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             ramp_color_rgb('Spectral',0.3) &rarr; '253,190,115'</p>
+        
+        <p><h4>Note:</h4>
+        The color ramps available vary between QGIS installations.  This function
+        may not give the expected results if you move your Quantum project.
+        </p>
     """  
     ramp_name = values[0]
     ramp_position = values[1]
