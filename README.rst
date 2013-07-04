@@ -5,9 +5,9 @@ Extra expression functions for the QGIS expression engine that didn't make it in
 
 Contributors welcome :)
 
-Current functions so far:
+Current functions so far::
 
-ramp_color_rgb -> Return just rgb from the given color ramp
+	ramp_color_rgb -> Return just rgb from the given color ramp
 
 Just a quick note
 +++++++++++++++++
