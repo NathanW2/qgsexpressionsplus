@@ -5,7 +5,7 @@ register=False in order to delay registring of functions before we load the plug
 """
 
 from qgis.utils import qgsfunction
-from qgis.core import QgsStyleV2
+from qgis.core import QgsStyleV2, QgsExpression
 from PyQt4.QtCore import QObject 
 from PyQt4.QtGui import QColor
 
@@ -24,9 +24,8 @@ def ramp_color_rgb(values, feature, parent):
         ramp_color_rgb(<i>ramp_name,value</i>)</p>
 
         <p><h4>Arguments</h4>
-        <!-- List args for functions here-->
         <i>  ramp_name</i> &rarr; the name of the color ramp as a string, for example 'Spectral'.<br>
-        <i>  value</i> &rarr; the position on the ramp to select the color from as a real number between 0 and 1.<br>
+        <i>  value</i> &rarr; the position on the ramp to select the color from as a real number between 0 and 1.<br></p>
         
         <p><h4>Example</h4>
         <!-- Show example of function.-->
@@ -52,5 +51,14 @@ def ramp_color_rgb(values, feature, parent):
     color = ramp.color(value)
     return "{},{},{}".format(color.red(), color.green(), color.blue())
  
-    
+functions = [ramp_color_rgb]
         
+def registerFunctions():
+    for func in functions:
+        if QgsExpression.registerFunction(func):
+            yield func.name()
+            
+def unregisterFunctions():            
+    # Unload all the functions that we created.        
+    for func in functions:
+        QgsExpression.unregisterFunction(func.name())

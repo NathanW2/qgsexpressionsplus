@@ -23,17 +23,17 @@ PLUGIN_UPLOAD = $(CURDIR)/plugin_upload.py
 # Makefile for a PyQGIS plugin 
 
 # translation
-SOURCES = expressions.py ui_expressions.py __init__.py expressionsdialog.py
+SOURCES = expressionsplus.py functions.py  ui_expressions.py __init__.py expressionsdialog.py
 #TRANSLATIONS = i18n/expressions_en.ts
 TRANSLATIONS = 
 
 # global
 
-PLUGINNAME = expressions
+PLUGINNAME = qgsexpressionsplus
 
-PY_FILES = expressions.py expressionsdialog.py __init__.py
+PY_FILES = expressionsplus.py functions.py expressionsdialog.py __init__.py
 
-EXTRAS = icon.png metadata.txt
+EXTRAS = icon.svg metadata.txt
 
 UI_FILES = ui_expressions.py
 
@@ -57,7 +57,7 @@ compile: $(UI_FILES) $(RESOURCE_FILES)
 # The deploy  target only works on unix like operating system where
 # the Python plugin directory is located at:
 # $HOME/.qgis/python/plugins
-deploy: compile doc transcompile
+deploy: compile transcompile
 	mkdir -p $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
 	cp -vf $(PY_FILES) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
 	cp -vf $(UI_FILES) $(HOME)/.qgis/python/plugins/$(PLUGINNAME)
@@ -70,7 +70,6 @@ deploy: compile doc transcompile
 # also delets any .svn entry
 dclean:
 	find $(HOME)/.qgis/python/plugins/$(PLUGINNAME) -iname "*.pyc" -delete
-	find $(HOME)/.qgis/python/plugins/$(PLUGINNAME) -iname ".svn" -prune -exec rm -Rf {} \;
 
 # The derase deletes deployed plugin
 derase:
@@ -78,7 +77,7 @@ derase:
 
 # The zip target deploys the plugin and creates a zip file with the deployed
 # content. You can then upload the zip file on http://plugins.qgis.org
-zip: deploy dclean 
+zip: deploy 
 	rm -f $(PLUGINNAME).zip
 	cd $(HOME)/.qgis/python/plugins; zip -9r $(CURDIR)/$(PLUGINNAME).zip $(PLUGINNAME)
 

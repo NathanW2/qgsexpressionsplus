@@ -21,7 +21,7 @@ email=woodrow.nathan@gmail.com
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-# changelog=
+changelog=Added ramp_color_rgb;
 
 # tags are comma separated with spaces allowed
 tags=expression
@@ -29,7 +29,7 @@ tags=expression
 homepage= https://github.com/NathanW2/qgsexpressionsplus
 tracker= https://github.com/NathanW2/qgsexpressionsplus/issues
 repository= https://github.com/NathanW2/qgsexpressionsplus.git
-icon=icon.png
+icon=icon.svg
 # experimental flag
 experimental=False
 
