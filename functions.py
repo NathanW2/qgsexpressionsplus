@@ -5,7 +5,7 @@ register=False in order to delay registring of functions before we load the plug
 """
 
 from qgis.utils import qgsfunction
-from qgis.core import QgsStyleV2, QgsExpression
+from qgis.core import QgsStyleV2, QgsExpression, QgsMapLayerRegistry
 from PyQt4.QtCore import QObject 
 from PyQt4.QtGui import QColor
 
@@ -51,7 +51,16 @@ def ramp_color_rgb(values, feature, parent):
     color = ramp.color(value)
     return "{},{},{}".format(color.red(), color.green(), color.blue())
  
-functions = [ramp_color_rgb]
+@qgsfunction(1, "Expressions +", register=False)
+def symbol(values, feature, parent):
+    if not feature: return
+    layername = values[0]
+    layer = QgsMapLayerRegistry.instance().mapLayersByName(layername)[0]
+    symbol = layer.rendererV2().symbolForFeature(feature)
+    color = symbol.color()
+    return "{},{},{}".format(color.red(), color.green(), color.blue())
+
+functions = [ramp_color_rgb, symbol]
         
 def registerFunctions():
     for func in functions:
