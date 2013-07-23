@@ -5,7 +5,7 @@ register=False in order to delay registring of functions before we load the plug
 """
 
 from qgis.utils import qgsfunction
-from qgis.core import QgsStyleV2, QgsExpression
+from qgis.core import QgsStyleV2, QgsExpression, QgsSymbolLayerV2Utils
 from PyQt4.QtCore import QObject, QDateTime, QDate
 from PyQt4.QtGui import QColor
 
@@ -52,6 +52,86 @@ def ramp_color_rgb(values, feature, parent):
     return "{},{},{}".format(color.red(), color.green(), color.blue())
 
 @qgsfunction(1, "Expressions +", register=False)
+def red(values, feature, parent):
+    """
+        Returns the red component of a color
+        
+        <p><h4>Syntax</h4>
+        red(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             red('255,0,0') &rarr; 255</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).red()
+    except:
+      return None
+      
+@qgsfunction(1, "Expressions +", register=False)
+def green(values, feature, parent):
+    """
+        Returns the green component of a color
+        
+        <p><h4>Syntax</h4>
+        green(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             green('0,255,0') &rarr; 255</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).green()
+    except:
+      return None      
+
+@qgsfunction(1, "Expressions +", register=False)
+def blue(values, feature, parent):
+    """
+        Returns the blue component of a color
+        
+        <p><h4>Syntax</h4>
+        blue(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             blue('0,0,255') &rarr; 255</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).blue()
+    except:
+      return None
+      
+@qgsfunction(1, "Expressions +", register=False)
+def alpha(values, feature, parent):
+    """
+        Returns the alpha component of a color
+        
+        <p><h4>Syntax</h4>
+        alpha(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             alpha('255,255,255,125') &rarr; 125</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).alpha()
+    except:
+      return None          
+
+@qgsfunction(1, "Expressions +", register=False)
 def dow(values, feature, parent):
     """
         Returns an integer representing the day of week for a given date. Returned 
@@ -83,9 +163,8 @@ def dow(values, feature, parent):
         return input_qdate.dayOfWeek() % 7     
       else:
         return None
-
  
-functions = [ramp_color_rgb, dow]
+functions = [ramp_color_rgb, red, green, blue, alpha, dow]
         
 def registerFunctions():
     for func in functions:
