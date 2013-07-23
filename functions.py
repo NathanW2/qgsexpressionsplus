@@ -129,8 +129,88 @@ def alpha(values, feature, parent):
     try:
       return QgsSymbolLayerV2Utils.decodeColor(values[0]).alpha()
     except:
-      return None          
+      return None
+      
+@qgsfunction(1, "Expressions +", register=False)
+def hue(values, feature, parent):
+    """
+        Returns the hue component of a color
+        
+        <p><h4>Syntax</h4>
+        hue(<i>color</i>)</p>
 
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             hue('255,0,0') &rarr; 0</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).hue()
+    except:
+      return None                 
+
+@qgsfunction(1, "Expressions +", register=False)
+def saturation(values, feature, parent):
+    """
+        Returns the saturation of a color
+        
+        <p><h4>Syntax</h4>
+        saturation(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             saturation('125,255,125') &rarr; 130</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).saturation()
+    except:
+      return None
+
+@qgsfunction(1, "Expressions +", register=False)
+def lightness(values, feature, parent):
+    """
+        Returns the lightness of a color
+        
+        <p><h4>Syntax</h4>
+        lightness(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             lightness('125,255,125') &rarr; 190</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).lightness()
+    except:
+      return None
+
+@qgsfunction(1, "Expressions +", register=False)
+def hsv_value(values, feature, parent):
+    """
+        Returns the hsv value component of a color
+        
+        <p><h4>Syntax</h4>
+        hsv_value(<i>color</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  color</i> &rarr; a color<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             hsv_value('125,255,125') &rarr; 255</p>
+    """  
+    try:
+      return QgsSymbolLayerV2Utils.decodeColor(values[0]).value()
+    except:
+      return None
+      
 @qgsfunction(1, "Expressions +", register=False)
 def dow(values, feature, parent):
     """
@@ -164,7 +244,7 @@ def dow(values, feature, parent):
       else:
         return None
  
-functions = [ramp_color_rgb, red, green, blue, alpha, dow]
+functions = [ramp_color_rgb, red, green, blue, hue, saturation, lightness, hsv_value, alpha, dow]
         
 def registerFunctions():
     for func in functions:
