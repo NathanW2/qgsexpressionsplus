@@ -6,7 +6,7 @@ register=False in order to delay registring of functions before we load the plug
 
 from qgis.utils import qgsfunction
 from qgis.core import QgsStyleV2, QgsExpression
-from PyQt4.QtCore import QObject 
+from PyQt4.QtCore import QObject, QDateTime, QDate
 from PyQt4.QtGui import QColor
 
 def getFloat(value):
@@ -50,8 +50,42 @@ def ramp_color_rgb(values, feature, parent):
     
     color = ramp.color(value)
     return "{},{},{}".format(color.red(), color.green(), color.blue())
+
+@qgsfunction(1, "Expressions +", register=False)
+def dow(values, feature, parent):
+    """
+        Returns an integer representing the day of week for a given date. Returned 
+        values range from 0-6, where 0 is Sunday.
+        
+        <p><h4>Syntax</h4>
+        dow(<i>date</i>)</p>
+
+        <p><h4>Arguments</h4>
+        <i>  date</i> &rarr; a date value. Must be a valid date or datetime field, or a 
+        string in the format 'yyyy-mm-dd'.<br></p>
+        
+        <p><h4>Example</h4>
+        <!-- Show example of function.-->
+             dow('2013-07-01') &rarr; 1</p>
+    """  
+    input_date = values[0]
+    
+    # Return dayOfWeek() % 7 so that values range from 0 (sun) to 6 (sat)
+    # to match Postgresql behaviour
+    if type(input_date) == QDateTime:
+      return input_date.date().dayOfWeek() % 7
+    elif type(input_date) == QDate:
+      return input_date.dayOfWeek() % 7
+    elif type(input_date) in (str, unicode):      
+      # Convert string to qdate
+      input_qdate = QDate.fromString(input_date, 'yyyy-MM-dd')
+      if input_qdate.isValid():
+        return input_qdate.dayOfWeek() % 7     
+      else:
+        return None
+
  
-functions = [ramp_color_rgb]
+functions = [ramp_color_rgb, dow]
         
 def registerFunctions():
     for func in functions:
