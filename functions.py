@@ -188,8 +188,7 @@ def dow(values, feature, parent):
       else:
         return None        
 
-functions = [ramp_color_rgb,  dow, halton_sequence, quasi_rand, red, green, blue, hue, saturation, lightness, hsv_value, alpha,
-            set_alpha, set_red, set_hue, set_saturation, set_lightness, set_hsv_value]
+functions = [ramp_color_rgb,  dow, halton_sequence, quasi_rand, get_color_part, set_color_part]
         
 def registerFunctions():
     for func in functions:
