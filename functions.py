@@ -5,7 +5,7 @@ register=False in order to delay registring of functions before we load the plug
 """
 
 from qgis.utils import qgsfunction
-from qgis.core import QgsStyleV2, QgsExpression, QgsSymbolLayerV2Utils
+from qgis.core import QgsStyleV2, QgsExpression, QgsSymbolLayerV2Utils, QgsMapLayerRegistry
 from PyQt4.QtCore import QObject, QDateTime, QDate
 from PyQt4.QtGui import QColor
 import math
@@ -188,7 +188,37 @@ def dow(values, feature, parent):
       else:
         return None        
 
-functions = [ramp_color_rgb,  dow, halton_sequence, quasi_rand, get_color_part, set_color_part]
+@qgsfunction(1, "Expressions +", register=False)
+def isselected(values, feature, parent):
+    """
+        Returns a boolean representing the current selection status of a feature.
+
+        <h4>Syntax</h4>
+        <p>isselected(<i>layername</i>)</p>
+
+        <h4>Arguments</h4>
+        <p><i>  layername</i> &rarr; a string. Must be the either the layer id or the layer name
+        of the layer on which this feature is located.<br/></p>
+
+        <h4>Example</h4>
+        <p><!-- Show example of function.-->
+             isselected('Rivers of Babylon')</p>
+    """
+    layername=values[0]
+    fid = feature.id()
+    layers = QgsMapLayerRegistry.instance().mapLayers()
+    try:
+      layer = layers[layername]
+    except KeyError:
+      try:
+        layer = [l for l in layers.iteritems() if l[1].name() == layername][0][1]
+      except IndexError:
+        parent.setEvalErrorString( 'No layer with id or name {} found'.format( layername ) )
+        return False
+
+    return fid in layer.selectedFeaturesIds()
+
+functions = [ramp_color_rgb,dow, halton_sequence, quasi_rand, get_color_part, set_color_part, isselected]
         
 def registerFunctions():
     for func in functions:
