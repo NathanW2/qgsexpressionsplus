@@ -213,7 +213,7 @@ def isselected(values, feature, parent):
       try:
         layer = [l for l in layers.iteritems() if l[1].name() == layername][0][1]
       except IndexError:
-        parent.setEvalErrorString( 'No layer with id or name {} found'.format( layername ) )
+        parent.setEvalErrorString( u'No layer with id or name {} found'.format( layername ) )
         return False
 
     return fid in layer.selectedFeaturesIds()
