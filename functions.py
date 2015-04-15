@@ -11,6 +11,7 @@ from PyQt4.QtGui import QColor
 import math
 
 import colorfunctions
+import samplingfunctions
 
 def getFloat(value):
     try:
@@ -218,7 +219,17 @@ def isselected(values, feature, parent):
 
     return fid in layer.selectedFeaturesIds()
 
-functions = [ramp_color_rgb,dow, halton_sequence, quasi_rand, get_color_part, set_color_part, isselected]
+functions = [
+    ramp_color_rgb,
+    dow, 
+    halton_sequence, 
+    quasi_rand, 
+    get_color_part, 
+    set_color_part, 
+    isselected, 
+    samplingfunctions.sample_raster,
+    samplingfunctions.sample_vector,
+]
         
 def registerFunctions():
     for func in functions:
