@@ -228,7 +228,7 @@ functions = [
     set_color_part, 
     isselected, 
     samplingfunctions.sample_raster,
-    samplingfunctions.sample_vector,
+    samplingfunctions.sample_polygon,
 ]
         
 def registerFunctions():
