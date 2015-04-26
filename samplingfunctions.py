@@ -57,7 +57,7 @@ def sample_polygon(layer_name, attribute, feature, parent):
                            geom_type=qgis.core.QGis.Polygon)
     if qgs_layer is not None:
         attr_idx = qgs_layer.fieldNameIndex(attribute)
-        bbox = feature.geometry().boundingBox()
+        bbox = feature.geometry().centroid().boundingBox()
         own_crs = _get_own_crs()
         reprojected_bbox = _reproject_bbox(own_crs, qgs_layer.crs(), bbox)
         feature_request = qgis.core.QgsFeatureRequest()
