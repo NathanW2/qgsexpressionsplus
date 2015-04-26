@@ -34,8 +34,8 @@ nosetests.xml
 .project
 .pydevproject
 
+# Pycharm
+.idea/*
+
 # vim
 *.un~
-
-#PyCharm
-.idea/*
