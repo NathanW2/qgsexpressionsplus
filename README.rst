@@ -30,19 +30,44 @@ Just a quick note
 Functions used from this project will not be available in other QGIS installs without
 first installing and enabling this plugin.
 
-Function usage
+Function Description and Usage
 ---------------------
 
-- **max_incremented('fieldName')**
+- **max_incremented('field_name')**
 
-	Given the name of the field (fieldName), returns 1 + the maximum value for the field. Can be used to automatically generate primary keys (eg. id, fid) when adding features in QGIS. Paste the following expression in the *Default value* box in the *Edit Widget Properties* dialog. 
-
-	::	
-
-		Example usage: max_incremented('fid')
-
-	To avoid the user from editing the automatically generated id, uncheck the `Editable` checkbox in the Edit Widget Properties dialog.
+	Given the name of the field (field_name), returns 1 + the maximum value for the field. Can be used to automatically generate primary keys (eg. id, fid) when adding features in QGIS. 
 	
+	To use this function:   
+	
+	1. Go to Layer Properties -> Fields -> Click on the *Text Edit* button in the *Edit widget column* to open up the *Edit Widget Properties* dialog box. 
+	2. Click on the Expression symbol to the right of the *Default value* text box. This would open the *Expression dialog*.
+	3. Enter an expression like the following in the Expression tab. 
+
+		::	
+
+			max_incremented('id')
+
+	To avoid the user from editing the automatically generated id, uncheck the *Editable* checkbox in the *Edit Widget Properties* dialog.
+
+- **get_env_variable('var_name')**
+
+	Returns the value of the variable 'var_name'. The variable can be a global, project or layer variable. See *Layer Properties -> Variables*.  
+	
+	This function is not an expression function as we generally wouldn't need to call it for each feature on the layer (it will return the same value for each feature), but it can be called from the Python console in QGIS, or from another expression function. 
+	
+	Save the file *qgs_variables.py* in `%userprofile%/.qgis2/python` and call the function in the Python console as:   
+	::	
+		import qgs_variables
+		qgs_variables.get_env_variable('user_full_name')
+
+- **set_env_variable('scope, 'var_name', 'var_value')**
+
+	Sets the value of the variable 'var_name' as 'var_value'. The 'scope' can be a global ('g'), project ('p) or layer ('l'). Similar to *get_env_variable()*, save the file *qgs_variables.py* in `%userprofile%/.qgis2/python` and call the function in the Python console as:   
+	::	
+		import qgs_variables
+		qgs_variables.set_env_variable('l', 'layer_type', 'vector_point')
+
+
 - **hstore_get_value(hstore_attr, key)**
 
     Given the key, this function returns its value from the hstore string.
