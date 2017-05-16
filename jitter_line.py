@@ -1,3 +1,5 @@
+""" Ref: https://nathanw.net/2012/08/05/generating-chainage-distance-nodes-in-qgis/ """
+
 from math import atan, sin, cos
 from random import uniform
 
@@ -18,7 +20,10 @@ def jitter_line(max_offset_percent, segment_percent, feature, parent):
 	return jittered_line
 
 def get_displaced_points(points_list, max_offset):
-	""" Displaces the points by a random distance less than or equal to max_offset """
+	""" 
+	Displaces the points perpendicular to the line by a 
+	random distance less than or equal to max_offset
+	"""
 
 	a = atan((points_list[0].x() - points_list[-1].x())/(points_list[0].y() - points_list[-1].y()))
 	# 'a' is the angle that the perpendicular to the line makes with the x axis 
