@@ -1,10 +1,9 @@
 from qgis.core import *
 from qgis.gui import *
-from qgis.utils import *
 
-@qgsfunction(args=1, group='Custom')
-def max_incremented(fieldName, feature, parent):
+@qgsfunction(args='auto', group='Custom')
+def max_incremented(field_name, feature, parent):
 	""" Generates a new value (1 + maximum value) for the given field """
 	layer = iface.activeLayer()
-	fieldNameIndex = layer.fieldNameIndex(fieldName[0])
-	return layer.maximumValue(fieldNameIndex) + 1
+	field_name_index = layer.fieldNameIndex(field_name)
+	return layer.maximumValue(field_name_index) + 1
