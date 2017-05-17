@@ -26,7 +26,7 @@ def get_displaced_points(points_list, max_offset):
 	"""
 
 	a = atan((points_list[0].x() - points_list[-1].x())/(points_list[0].y() - points_list[-1].y()))
-	# 'a' is the angle that the perpendicular to the line makes with the x axis 
+	# 'a' is the angle that the perpendicular to the line makes with the y axis 
 	for point in points_list[1:-1]:
 		offset = uniform(-1*max_offset, max_offset)
 		point.set(point.x() + offset*sin(a), point.y() - offset*cos(a))
