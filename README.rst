@@ -49,7 +49,7 @@ To use this function:
 ::	
 
 	jitter_line(5, 20)
-Where '5' and '10' are the maximum_offset_percent and segment_length_percent respectively.
+Where '5' and '20' are the maximum_offset_percent and segment_length_percent respectively.
 
 6. On clicking 'OK' the jitter lines will be displayed on the layer.
 
