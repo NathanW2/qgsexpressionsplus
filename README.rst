@@ -157,3 +157,21 @@ Returns whether the hstore tags field contains all the keys and values in the hs
 	hstore_contains_hstore("tags", 'amenity=>restaurant,cuisine=>swiss')
 
 The query above will select all features which contain both the key-value pairs, `amenity=>restaurant` and `cuisine=>swiss` in their hstore tags.
+
+
+nullif('argument_1', 'argument_2')
++++++++++++++++++
+
+Returns a None/NULL value if argument_1 is equal to argument_2, otherwise it returns argument_1 (SQL alike).
+
+::
+
+	 nullif('hello world','')
+
+The expression function above will return 'hello world'. A good use case would be to use this function with the in-built *coalesce* in an expression like the following.
+
+::
+
+	coalesce(nullif("name",''), nullif("name_en",''), 'unknown')
+	
+Where "name" and "name_en" are field names (note the double quotes). This would return the 'name' if it is not an empty string, 'name_en' if the 'name' is empty and 'unknown' if both the 'name' and 'name_en' are empty. 
