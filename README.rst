@@ -36,7 +36,7 @@ Function Description and Usage
 jitter_geometry('max_offset_percent', 'segment_length_percent')
 +++++++++++++++++
 
-This function creates a jittered geometry from a linestring or polygon geometry. Given the maximum offset and segment length as percentages, it first interpolates points on the line at the segments. Then it displaces the point perpendicular to the line by a random distance less than or equal to the maximum offset. Finally it joins all these displaced points and returns a linestring.
+This function creates a jittered geometry from a linestring or polygon geometry. Given the maximum offset and segment length as percentages, it first interpolates points on the linestring or polygon boundary at the segments. Then it displaces the point perpendicular to the linestring or polygon boundary by a random distance less than or equal to the maximum offset. Finally it joins all these displaced points and returns a jittered geometry.
 
 To use this function:   
 
@@ -51,7 +51,7 @@ To use this function:
 	jitter_geometry(5, 20)
 Where '5' and '20' are the maximum_offset_percent and segment_length_percent respectively. These values can range between 1 and 99.
 
-6. On clicking 'OK' the jitter lines will be displayed on the layer.
+6. On clicking 'OK' the jittered geometries will be displayed on the layer.
 
 
 
@@ -65,7 +65,7 @@ Similarly the  segment length is calculated from the segment_length_percent as:
 ::
 	segment_length = (segment_length_percent*length_of_line)/100
 	
-The reason is that if the user enters absolute values for the offset and segment lengths, they maybe too large or small compared to the length of the line, and we would not get the desired output. A smaller value for the max_offset_percent and segment_length_percent generates a better output, especially for polygons. Recommended range for max_offset_percent and segment_length_percent for polygons would be [1,5] and [1,10] respectively.
+The reason is that if the user enters absolute values for the offset and segment lengths, they maybe too large or small compared to the length of the line or the polygon's perimeter, and we would not get the desired output. A smaller value for the max_offset_percent and segment_length_percent generates a better output, especially for polygons. Recommended range for max_offset_percent and segment_length_percent for polygons would be [1,5] and [1,10] respectively.
 
 
 max_incremented('field_name')
