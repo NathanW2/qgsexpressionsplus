@@ -85,27 +85,6 @@ To use this function:
 
 To avoid the user from editing the automatically generated id, uncheck the *Editable* checkbox in the *Edit Widget Properties* dialog.
 
-get_env_variable('var_name')
-+++++++++++++++++
-
-Returns the value of the variable 'var_name'. The variable can be a global, project or layer variable. See *Layer Properties -> Variables*.  
-
-This function is not an expression function as we generally wouldn't need to call it for each feature on the layer (it will return the same value for each feature), but it can be called from the Python console in QGIS, or from another expression function. 
-
-Save the file *qgs_variables.py* in `%userprofile%/.qgis2/python` and call the function in the Python console as:   
-::	
-	import qgs_variables
-	qgs_variables.get_env_variable('user_full_name')
-
-set_env_variable('scope, 'var_name', 'var_value')
-+++++++++++++++++
-
-Sets the value of the variable 'var_name' as 'var_value'. The 'scope' can be a global ('g'), project ('p) or layer ('l'). Similar to *get_env_variable()*, save the file *qgs_variables.py* in `%userprofile%/.qgis2/python` and call the function in the Python console as:   
-::	
-	import qgs_variables
-	qgs_variables.set_env_variable('l', 'layer_type', 'vector_point')
-
-
 hstore_get_value("field", 'key')
 +++++++++++++++++
 
