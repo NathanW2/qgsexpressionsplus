@@ -6,6 +6,7 @@ register=False in order to delay registring of functions before we load the plug
 
 from qgis.utils import qgsfunction
 from qgis.core import QgsStyleV2, QgsExpression, QgsSymbolLayerV2Utils, QgsMapLayerRegistry
+from qgis.gui import QgsEditorWidgetRegistry
 from PyQt4.QtCore import QObject, QDateTime, QDate
 from PyQt4.QtGui import QColor
 import math
@@ -219,6 +220,47 @@ def isselected(values, feature, parent):
 
     return fid in layer.selectedFeaturesIds()
 
+@qgsfunction(3, "Expressions +", register=False)
+def represent_value(values, feature, parent):
+    """
+        Returns a fields representation using the layer widget configuration
+
+        <h4>Syntax</h4>
+        <p>represent_value(<i>value</i>, <i>layername</i>, <i>fieldname</i>)</p>
+
+        <h4>Arguments</h4>
+        <p><i>  value</i> &rarr; value of a field. This value will be represented.
+        <p><i>  layername</i> &rarr; a string. Must be the either the layer id or the layer name
+        of the layer on which this feature is located.</p>
+        <p><i>  fieldname</i> &rarr; a string. Must be a field name on the layer.</p>
+
+        <h4>Example</h4>
+        <p><pre>represent_value("type", 'type', 'houses')</pre></p>
+    """
+    value=values[0]
+    field_name=values[1]
+    layer_name=values[2]
+
+    layers = QgsMapLayerRegistry.instance().mapLayers()
+    try:
+      layer = layers[layer_name]
+    except KeyError:
+      try:
+        layer = [l for l in layers.iteritems() if l[1].name() == layer_name][0][1]
+      except IndexError:
+        parent.setEvalErrorString(u'No layer with id or name {} found'.format(layer_name))
+        return False
+
+    field_index = layer.fields().fieldNameIndex(field_name)
+    if field_index < 0:
+        parent.setEvalErrorString(u'Field with name {} not found on layer'.format(field_name, layer_name))
+        return False
+
+    widget_type = layer.editFormConfig().widgetType(field_index)
+    widget_config = layer.editFormConfig().widgetConfig(field_index)
+    widget_factory = QgsEditorWidgetRegistry.instance().factory(widget_type)
+    return widget_factory.representValue(layer, field_index, widget_config, None, value)
+
 functions = [
     ramp_color_rgb,
     dow, 
@@ -229,6 +271,7 @@ functions = [
     isselected, 
     samplingfunctions.sample_raster,
     samplingfunctions.sample_polygon,
+    represent_value,
 ]
         
 def registerFunctions():
